@@ -39,3 +39,5 @@ describe('nChooseK()', () => {
 		expect(nChooseK<number>([ 5, 6, 7, 8, 9 ], 1)).toEqual([ [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ] ]);
 	});
 });
+
+export {};
