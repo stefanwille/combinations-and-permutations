@@ -1,58 +1,83 @@
 const nChooseK = <T extends number>(elements: T[], k: number): T[][] => {
-	type Combination = T[];
-	const n = elements.length;
-	if (k === 1) {
-		return elements.map((element) => [ element ]);
-	}
+  type Combination = T[];
+  const n = elements.length;
+  if (k === 0) {
+    return [[]];
+  }
 
-	if (n === 1) {
-		const theOnlyElement = elements[0];
-		const combination = Array.from({ length: k }).fill(theOnlyElement) as Combination;
-		const result = [ combination ];
-		return result;
-	}
+  if (n === 1) {
+    const theOnlyElement = elements[0];
+    const combination = Array.from({ length: k }).fill(
+      theOnlyElement
+    ) as Combination;
+    const result = [combination];
+    return result;
+  }
 
-	let result: Combination[] = [];
-	const remainingElements: T[] = [ ...elements ];
-	for (;;) {
-		const currentElement = remainingElements.shift();
-		if (currentElement === undefined) {
-			break;
-		}
-		const combinationsOfRemainingElements = nChooseK(remainingElements, k - 1);
+  let result: Combination[] = [];
+  const remainingElements: T[] = [...elements];
+  for (;;) {
+    const currentElement = remainingElements.shift();
+    if (currentElement === undefined) {
+      break;
+    }
+    for (
+      let currentElementCount = k;
+      currentElementCount > 0;
+      currentElementCount--
+    ) {
+      const currentElementCombination = Array.from({
+        length: currentElementCount,
+      }).fill(currentElement) as Combination;
+      const subCombinations = nChooseK(
+        remainingElements,
+        k - currentElementCount
+      );
+      const newCombinations = subCombinations.map((subCombination) =>
+        currentElementCombination.concat(subCombination)
+      );
+      result = result.concat(newCombinations);
+    }
+  }
 
-		const newCombinations = combinationsOfRemainingElements.map((subCombination) => [
-			currentElement,
-			...subCombination,
-		]);
-		result = result.concat(newCombinations);
-	}
-
-	return result;
+  return result;
 };
 
-describe('nChooseK()', () => {
-	xit('returns the combinations with repetition for the given set', () => {
-		expect(nChooseK<number>([ 1, 2, 3 ], 2)).toEqual([
-			[ 1, 1 ],
-			[ 1, 2 ],
-			[ 1, 3 ],
-			[ 2, 2 ],
-			[ 2, 3 ],
-			[ 1, 3 ],
-			[ 3, 3 ],
-		]);
-	});
+describe("nChooseK()", () => {
+  it("returns the combinations with repetition for the given set", () => {
+    const result = nChooseK<number>([1, 2, 3], 2);
+    expect(result).toEqual([
+      [1, 1],
+      [1, 2],
+      [1, 3],
+      [2, 2],
+      [2, 3],
+      [3, 3],
+    ]);
+  });
 
-	it('handles n=1', () => {
-		expect(nChooseK<number>([ 6 ], 3)).toEqual([ [ 6, 6, 6 ] ]);
-	});
+  it("handles n=2 and k=2", () => {
+    const result = nChooseK<number>([1, 2], 2);
+    expect(result).toEqual([
+      [1, 1],
+      [1, 2],
+      [2, 2],
+    ]);
+  });
 
-	it('handles k=1', () => {
-		expect(nChooseK<number>([ 6, 7, 8 ], 1)).toEqual([ [ 6 ], [ 7 ], [ 8 ] ]);
-		expect(nChooseK<number>([ 6, 7, 8, 9 ], 1)).toEqual([ [ 6 ], [ 7 ], [ 8 ], [ 9 ] ]);
-		expect(nChooseK<number>([ 5, 6, 7, 8, 9 ], 1)).toEqual([ [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ] ]);
-	});
+  it("handles n=1", () => {
+    expect(nChooseK<number>([6], 3)).toEqual([[6, 6, 6]]);
+  });
+
+  it("handles k=0", () => {
+    expect(nChooseK<number>([5, 6, 7, 8, 9], 0)).toEqual([[]]);
+  });
+
+  it("handles k=1", () => {
+    const result = nChooseK<number>([5, 6, 7, 8, 9], 1);
+
+    expect(result).toEqual([[5], [6], [7], [8], [9]]);
+  });
 });
 
 export {};
