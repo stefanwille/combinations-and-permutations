@@ -15,36 +15,20 @@ const nChooseK = <T>(elements: readonly T[], k: number): T[][] => {
     return [[]];
   }
 
-  if (n === 1) {
-    const theOnlyElement = elements[0];
-    const combination = Array.from({ length: k }).fill(
-      theOnlyElement
-    ) as Combination;
-    const result = [combination];
-    return result;
-  }
-
   let result: Combination[] = [];
   const remainingElements: T[] = [...elements];
   for (;;) {
-    const currentElement = remainingElements.shift();
-    if (currentElement === undefined) {
+    const element = remainingElements.shift();
+    if (element === undefined) {
       break;
     }
-    for (
-      let currentElementCount = k;
-      currentElementCount > 0;
-      currentElementCount--
-    ) {
-      const currentElementCombination = Array.from({
-        length: currentElementCount,
-      }).fill(currentElement) as Combination;
-      const subCombinations = nChooseK(
-        remainingElements,
-        k - currentElementCount
-      );
-      const newCombinations = subCombinations.map((subCombination) =>
-        currentElementCombination.concat(subCombination)
+    for (let occursTimes = k; occursTimes > 0; occursTimes--) {
+      const elementPrefix = Array.from({
+        length: occursTimes,
+      }).fill(element) as Combination;
+      const subCombinations = nChooseK(remainingElements, k - occursTimes);
+      const newCombinations: Combination[] = subCombinations.map(
+        (subCombination) => elementPrefix.concat(subCombination)
       );
       result = result.concat(newCombinations);
     }
