@@ -10,7 +10,6 @@
 */
 const nChooseK = <T>(elements: readonly T[], k: number): T[][] => {
   type Combination = T[];
-  const n = elements.length;
   if (k === 0) {
     return [[]];
   }
