@@ -1,3 +1,13 @@
+/*
+  The basic idea for the algorithm is take one element at a time and generate all combinations
+  where this element occurs
+    - 1 time
+    - 2 time
+    - ...
+    - k times
+  The cases where this element occurs 0 times is covered when generating combinations for the other elements,
+  for example when the next element occurs k times.
+*/
 const nChooseK = <T>(elements: readonly T[], k: number): T[][] => {
   type Combination = T[];
   const n = elements.length;
@@ -75,7 +85,6 @@ describe("nChooseK()", () => {
 
   it("handles k=1", () => {
     const result = nChooseK<number>([5, 6, 7, 8, 9], 1);
-
     expect(result).toEqual([[5], [6], [7], [8], [9]]);
   });
 });
