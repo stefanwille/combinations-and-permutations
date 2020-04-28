@@ -1,4 +1,4 @@
-const nChooseK = <T extends number>(elements: T[], k: number): T[][] => {
+const nChooseK = <T>(elements: readonly T[], k: number): T[][] => {
   type Combination = T[];
   const n = elements.length;
   if (k === 0) {
