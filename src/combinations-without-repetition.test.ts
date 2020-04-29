@@ -7,16 +7,20 @@ const nChooseK = <T extends number>(elements: T[], k: number): T[][] => {
     return [elements];
   }
 
-  const [firstElement, ...remainingElements] = elements;
+  let result: Combination[] = [];
+  const remainingElements = [...elements];
+  for (;;) {
+    const firstElement = remainingElements.shift();
+    if (firstElement === undefined) {
+      break;
+    }
 
-  const combinationsOfSubElements = nChooseK(remainingElements, k - 1);
-  const combinationsWithFirstElement: Combination[] = combinationsOfSubElements.map(
-    (combination) => [firstElement, ...combination]
-  );
-  const combinationsWithoutFirstElement = nChooseK(remainingElements, k);
-  const result: Combination[] = combinationsWithFirstElement.concat(
-    combinationsWithoutFirstElement
-  );
+    const combinationsOfSubElements = nChooseK(remainingElements, k - 1);
+    const combinationsWithFirstElement: Combination[] = combinationsOfSubElements.map(
+      (combination) => [firstElement, ...combination]
+    );
+    result = result.concat(combinationsWithFirstElement);
+  }
   return result;
 };
 
