@@ -7,6 +7,7 @@ To do so, we generate all permutations of length r-1 and prefix them with the cu
 const permutations = (elements: readonly number[], r: number): number[][] => {
   let result: number[][] = [];
 
+  // Recursion anchor.
   if (r === 0) {
     return [[]];
   }
