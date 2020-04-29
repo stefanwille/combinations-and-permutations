@@ -4,15 +4,15 @@ going through all elements and for each element to generate all permutations of 
 in front.
 To do so, we generate all permutations of length r-1 and prefix them with the current element.
 */
-const permutations = (elements: readonly number[], r: number): number[][] => {
-  let result: number[][] = [];
+const permutations = <T>(elements: readonly T[], r: number): T[][] => {
+  let result: T[][] = [];
 
   // Recursion anchor.
   if (r === 0) {
     return [[]];
   }
 
-  const permutationsOfLengthRMinus1: number[][] = permutations(elements, r - 1);
+  const permutationsOfLengthRMinus1: T[][] = permutations(elements, r - 1);
   for (let element of elements) {
     const permutationWithElementInFront = permutationsOfLengthRMinus1.map(
       (subPermutation) => [element, ...subPermutation]
