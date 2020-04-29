@@ -11,13 +11,12 @@ const permutations = (elements: readonly number[], r: number): number[][] => {
     return [[]];
   }
 
-  const subPermutations: number[][] = permutations(elements, r - 1);
+  const permutationsOfLengthRMinus1: number[][] = permutations(elements, r - 1);
   for (let element of elements) {
-    const permutationWithElement = subPermutations.map((subPermutation) => [
-      element,
-      ...subPermutation,
-    ]);
-    result = result.concat(permutationWithElement);
+    const permutationWithElementInFront = permutationsOfLengthRMinus1.map(
+      (subPermutation) => [element, ...subPermutation]
+    );
+    result = result.concat(permutationWithElementInFront);
   }
 
   return result;
