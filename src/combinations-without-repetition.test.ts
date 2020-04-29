@@ -1,10 +1,15 @@
-const nChooseK = <T extends number>(elements: T[], k: number): T[][] => {
+/*
+The idea for this algorithm is to go through each element and generate all combinations that involve this element.
+Generating all combinations that involve a given element is done by
+    - generating all subcombinations of length k-1 that don't involve the element or any of the previous elements
+    - and add the element to them, resulting in all cominbations of length k that involve the element.
+ */
+const nChooseK = <T>(elements: T[], k: number): T[][] => {
   type Combination = T[];
-  if (k === 1) {
-    return elements.map((element) => [element]);
-  }
-  if (k == elements.length) {
-    return [elements];
+
+  // Recursion anchor
+  if (k === 0) {
+    return [[]];
   }
 
   let result: Combination[] = [];
@@ -15,8 +20,8 @@ const nChooseK = <T extends number>(elements: T[], k: number): T[][] => {
       break;
     }
 
-    const combinationsOfSubElements = nChooseK(remainingElements, k - 1);
-    const combinationsWithFirstElement: Combination[] = combinationsOfSubElements.map(
+    const subCombinations = nChooseK(remainingElements, k - 1);
+    const combinationsWithFirstElement: Combination[] = subCombinations.map(
       (combination) => [firstElement, ...combination]
     );
     result = result.concat(combinationsWithFirstElement);
@@ -25,7 +30,7 @@ const nChooseK = <T extends number>(elements: T[], k: number): T[][] => {
 };
 
 describe("nChooseK()", () => {
-  it("returns the combinations without repetition for the given set", () => {
+  it("returns the combinations without repetition for the given set (with k=2)", () => {
     expect(nChooseK<number>([6, 7, 8], 2)).toEqual([
       [6, 7],
       [6, 8],
@@ -42,9 +47,8 @@ describe("nChooseK()", () => {
     ]);
   });
 
-  it("handles k=n", () => {
-    expect(nChooseK<number>([6, 7, 8], 3)).toEqual([[6, 7, 8]]);
-    expect(nChooseK<number>([6, 7, 8, 9], 4)).toEqual([[6, 7, 8, 9]]);
+  it("handles k=0", () => {
+    expect(nChooseK<number>([6, 7, 8], 0)).toEqual([[]]);
   });
 
   it("handles k=1", () => {
@@ -57,6 +61,11 @@ describe("nChooseK()", () => {
       [8],
       [9],
     ]);
+  });
+
+  it("handles k=n", () => {
+    expect(nChooseK<number>([6, 7, 8], 3)).toEqual([[6, 7, 8]]);
+    expect(nChooseK<number>([6, 7, 8, 9], 4)).toEqual([[6, 7, 8, 9]]);
   });
 });
 
