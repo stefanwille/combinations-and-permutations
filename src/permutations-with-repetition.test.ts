@@ -11,7 +11,7 @@ const permutations = (elements: readonly number[], r: number): number[][] => {
     return [[]];
   }
 
-  const subPermutations: readonly number[][] = permutations(elements, r - 1);
+  const subPermutations: number[][] = permutations(elements, r - 1);
   for (let element of elements) {
     const permutationWithElement = subPermutations.map((subPermutation) => [
       element,
