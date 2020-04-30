@@ -8,13 +8,13 @@ To generate the permutations begin with a certain element,
 generate all permutation of length r-1 of the given elements without the current element,
 and then prefix them with the current element.
 */
-const permutations = (elements: readonly number[], r: number): number[][] => {
+const permutations = <T>(elements: readonly T[], r: number): T[][] => {
   // Recursion anchor
   if (r === 0) {
     return [[]];
   }
 
-  let result: number[][] = [];
+  let result: T[][] = [];
 
   for (let index = 0; index < elements.length; index++) {
     const currentElement = elements[index];
