@@ -45,14 +45,14 @@ describe("permutation() without repetition", () => {
     ]);
   });
 
-  it("works with r=1", () => {
-    const result = permutations([1, 2, 3], 1);
-    expect(result).toEqual([[1], [2], [3]]);
-  });
-
   it("works with r=0", () => {
     const result = permutations([1, 2, 3], 0);
     expect(result).toEqual([[]]);
+  });
+
+  it("works with r=1", () => {
+    const result = permutations([1, 2, 3], 1);
+    expect(result).toEqual([[1], [2], [3]]);
   });
 
   it("works with r=3", () => {
