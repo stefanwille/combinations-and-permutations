@@ -3,7 +3,7 @@ Algorithm:
    Begin with all pairs of combintaions with length 0 and all remaining elements.
    Then for each pair, generate all pairs with combinations of length 1 and
    remaining elements.
-   Go on until we reached k and returns all combinations from the pairs.
+   Go on until we reached k and return all combinations from the pairs.
 */
 const nChooseK = <T>(elements: readonly T[], k: number): T[][] => {
   type Combination = T[];
