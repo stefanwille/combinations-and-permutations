@@ -9,8 +9,8 @@ const nChooseK = <T>(elements: readonly T[], k: number): T[][] => {
   type Combination = T[];
   type RemainingElements = T[];
   type Pair = {
-    readonly combination: Combination;
-    readonly remainingElements: RemainingElements;
+    combination: Combination;
+    remainingElements: RemainingElements;
   };
 
   if (elements.length < k) {
