@@ -18,11 +18,12 @@ const nChooseK = <T>(elements: readonly T[], k: number): T[][] => {
   }
 
   let pairs: Pair[] = [{ combination: [], remainingElements: [...elements] }];
-  let currentK = 0;
   let newPairs: Pair[] = [];
-  while (currentK < k) {
+  // Iterate k times to get combinations with length of k
+  for (let currentK = 0; currentK < k; currentK++) {
+    // For each pair we currently have, generate all pairs with combinations of length currentK + 1.
     for (let pair of pairs) {
-      // Generate all pairs with combinations of length currentK + 1
+      // Generate all pairs that have the current pair's combination as prefix.
       const remainingElements = [...pair.remainingElements];
       for (;;) {
         const currentElement: T | undefined = remainingElements.shift();
@@ -38,7 +39,6 @@ const nChooseK = <T>(elements: readonly T[], k: number): T[][] => {
     }
     pairs = newPairs;
     newPairs = [];
-    currentK++;
   }
 
   // Returns all combinations from the pairs
