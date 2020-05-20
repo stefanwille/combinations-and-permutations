@@ -93,3 +93,5 @@ describe("permutations()", () => {
     ]);
   });
 });
+
+export {};

@@ -17,8 +17,9 @@ const permutations = <T>(elements: readonly T[], r: number): T[][] => {
   let result: T[][] = [];
 
   for (let index = 0; index < elements.length; index++) {
+    const elementsWithoutCurrentElement = [...elements];
     const currentElement = elements[index];
-    const elementsWithoutCurrentElement = [...elements].splice(index, 1);
+    elementsWithoutCurrentElement.splice(index, 1);
     const permutationsWithoutCurrentElement = permutations(
       elementsWithoutCurrentElement,
       r - 1
@@ -32,7 +33,7 @@ const permutations = <T>(elements: readonly T[], r: number): T[][] => {
   return result;
 };
 
-describe("permutation() without repetition", () => {
+describe("permutations() without repetition", () => {
   it("returns all permutations of the given elements without repetitions", () => {
     const result = permutations([1, 2, 3], 2);
     expect(result).toEqual([
